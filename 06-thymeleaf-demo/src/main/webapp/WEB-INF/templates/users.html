@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - Thymeleaf模板演示'">用户列表 - Thymeleaf模板演示</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Thymeleaf模板引擎演示</h1>
+            <nav>
+                <ul>
+                    <li><a th:href="@{/thymeleaf/}">首页</a></li>
+                    <li><a th:href="@{/thymeleaf/users}" class="active">用户列表</a></li>
+                    <li><a th:href="@{/thymeleaf/profile}">用户详情</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <h2 th:text="${title}">用户列表</h2>
+            
+            <div class="user-stats">
+                <div class="stat-card">
+                    <h3>总用户数</h3>
+                    <p class="stat-number" th:text="${#lists.size(users)}">0</p>
+                </div>
+            </div>
+
+            <div class="user-table-container">
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>姓名</th>
+                            <th>邮箱</th>
+                            <th>年龄</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user,iterStat : ${users}" 
+                            th:class="${iterStat.even} ? 'even' : 'odd'">
+                            <td th:text="${user.id}">1</td>
+                            <td class="user-name" th:text="${user.name}">张三</td>
+                            <td th:text="${user.email}">zhangsan@example.com</td>
+                            <td th:text="${user.age} + '岁'">25岁</td>
+                            <td>
+                                <a th:href="@{/thymeleaf/profile(id=${user.id})}" 
+                                   class="btn btn-primary">查看详情</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <div th:if="${#lists.size(users) > 0}">
+                    <p class="pagination-info" 
+                       th:text="'显示 1-' + ${#lists.size(users)} + ' 条记录，共 ' + ${#lists.size(users)} + ' 条'">
+                        显示记录信息
+                    </p>
+                </div>
+                
+                <div th:if="${#lists.isEmpty(users)}" class="empty-state">
+                    <h3>暂无用户数据</h3>
+                    <p>系统中还没有用户信息</p>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>Thymeleaf特性演示</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>条件判断</h4>
+                        <p>使用th:if进行条件渲染</p>
+                        <span th:if="${#lists.size(users) > 0}" class="status active">✓ 有数据</span>
+                        <span th:unless="${#lists.size(users) > 0}" class="status inactive">✗ 无数据</span>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>循环遍历</h4>
+                        <p>使用th:each遍历集合</p>
+                        <span class="status active">✓ 支持</span>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>URL构建</h4>
+                        <p>使用@{}语法构建URL</p>
+                        <span class="status active">✓ 支持</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Thymeleaf模板演示项目</p>
+        </div>
+    </footer>
+</body>
+</html> 

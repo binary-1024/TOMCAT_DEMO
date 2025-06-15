@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - Thymeleaf模板演示'">用户详情 - Thymeleaf模板演示</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Thymeleaf模板引擎演示</h1>
+            <nav>
+                <ul>
+                    <li><a th:href="@{/thymeleaf/}">首页</a></li>
+                    <li><a th:href="@{/thymeleaf/users}">用户列表</a></li>
+                    <li><a th:href="@{/thymeleaf/profile}" class="active">用户详情</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <h2 th:text="${title}">用户详情</h2>
+            
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">
+                        <span class="avatar-text" th:text="${user.name != null ? user.name.substring(0,1) : 'U'}">张</span>
+                    </div>
+                    <div class="profile-info">
+                        <h3 th:text="${user.name}">张三</h3>
+                        <p class="profile-email" th:text="${user.email}">zhangsan@example.com</p>
+                    </div>
+                </div>
+
+                <div class="profile-details">
+                    <div class="detail-group">
+                        <label>用户ID：</label>
+                        <span th:text="${user.id}">1</span>
+                    </div>
+                    
+                    <div class="detail-group">
+                        <label>姓名：</label>
+                        <span th:text="${user.name}">张三</span>
+                    </div>
+                    
+                    <div class="detail-group">
+                        <label>邮箱：</label>
+                        <span th:text="${user.email}">zhangsan@example.com</span>
+                    </div>
+                    
+                    <div class="detail-group">
+                        <label>年龄：</label>
+                        <span th:text="${user.age} + '岁'">25岁</span>
+                    </div>
+                    
+                    <div th:if="${user.address != null and !#strings.isEmpty(user.address)}" class="detail-group">
+                        <label>地址：</label>
+                        <span th:text="${user.address}">地址信息</span>
+                    </div>
+                    
+                    <div th:if="${user.phone != null and !#strings.isEmpty(user.phone)}" class="detail-group">
+                        <label>电话：</label>
+                        <span th:text="${user.phone}">电话号码</span>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn btn-primary">编辑用户</button>
+                    <button class="btn btn-secondary">发送消息</button>
+                    <a th:href="@{/thymeleaf/users}" class="btn btn-outline">返回列表</a>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>Thymeleaf表达式演示</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>变量表达式</h4>
+                        <p>使用${...}访问变量</p>
+                        <span class="status active">✓ 支持</span>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>选择表达式</h4>
+                        <p>使用*{...}简化对象访问</p>
+                        <div th:object="${user}">
+                            <p>用户: <span th:text="*{name}">姓名</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>消息表达式</h4>
+                        <p>使用#{...}访问国际化消息</p>
+                        <span class="status active">✓ 支持</span>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>URL表达式</h4>
+                        <p>使用@{...}构建URL</p>
+                        <span class="status active">✓ 支持</span>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>工具对象</h4>
+                        <p>内置#strings、#dates等工具</p>
+                        <p>姓名长度: <span th:text="${#strings.length(user.name)}">0</span></p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>条件运算</h4>
+                        <p>支持三元运算符</p>
+                        <p th:text="${user.age >= 18} ? '成年' : '未成年'">年龄状态</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Thymeleaf模板演示项目</p>
+        </div>
+    </footer>
+</body>
+</html> 

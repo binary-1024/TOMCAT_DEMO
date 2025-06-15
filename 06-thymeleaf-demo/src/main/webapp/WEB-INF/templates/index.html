@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - Thymeleaf模板演示'">Thymeleaf模板演示</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Thymeleaf模板引擎演示</h1>
+            <nav>
+                <ul>
+                    <li><a th:href="@{/thymeleaf/}" class="active">首页</a></li>
+                    <li><a th:href="@{/thymeleaf/users}">用户列表</a></li>
+                    <li><a th:href="@{/thymeleaf/profile}">用户详情</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="welcome-section">
+                <h2 th:text="${title}">标题</h2>
+                <p class="message" th:text="${message}">消息</p>
+                <div class="info-card">
+                    <h3>当前时间</h3>
+                    <p class="time" th:text="${#dates.format(currentTime, 'yyyy年MM月dd日 HH:mm:ss')}">
+                        时间显示
+                    </p>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>Thymeleaf模板特性演示</h3>
+                <div class="feature-grid">
+                    <div class="feature-card" th:each="feature : ${features}">
+                        <h4 th:text="${feature.name}">特性名称</h4>
+                        <p th:text="${feature.description}">特性描述</p>
+                        <span th:if="${feature.enabled}" class="status active">✓ 已启用</span>
+                        <span th:unless="${feature.enabled}" class="status inactive">✗ 未启用</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="thymeleaf-examples">
+                <h3>Thymeleaf语法示例</h3>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>条件判断</h4>
+                        <code>th:if</code> 和 <code>th:unless</code>
+                        <div class="example-demo">
+                            <p th:if="${currentTime != null}" class="success">
+                                ✓ 当前时间已加载
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4>循环遍历</h4>
+                        <code>th:each</code>
+                        <div class="example-demo">
+                            <ul>
+                                <li th:each="feature : ${features}" th:text="${feature.name}">特性</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4>URL构建</h4>
+                        <code>@{}</code> 表达式
+                        <div class="example-demo">
+                            <a th:href="@{/thymeleaf/users}">用户列表链接</a>
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <h4>工具对象</h4>
+                        <code>#dates</code>, <code>#strings</code> 等
+                        <div class="example-demo">
+                            <p>当前年份: <span th:text="${#dates.year(currentTime)}">2024</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Thymeleaf模板演示项目</p>
+        </div>
+    </footer>
+</body>
+</html> 

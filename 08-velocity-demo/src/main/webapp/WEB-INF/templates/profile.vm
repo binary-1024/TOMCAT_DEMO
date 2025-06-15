@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$title - Velocity模板演示</title>
+    <link rel="stylesheet" href="/velocity-demo/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Velocity模板引擎演示</h1>
+            <nav>
+                <ul>
+                    <li><a href="/velocity-demo/velocity/">首页</a></li>
+                    <li><a href="/velocity-demo/velocity/users">用户列表</a></li>
+                    <li><a href="/velocity-demo/velocity/profile" class="active">用户详情</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <h2>$title</h2>
+            
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar">
+                        <span class="avatar-text">${user.name.substring(0,1)}</span>
+                    </div>
+                    <div class="profile-info">
+                        <h3>$user.name</h3>
+                        <p class="profile-email">$user.email</p>
+                    </div>
+                </div>
+
+                <div class="profile-details">
+                    <div class="detail-group">
+                        <label>用户ID：</label>
+                        <span>$user.id</span>
+                    </div>
+                    
+                    <div class="detail-group">
+                        <label>姓名：</label>
+                        <span>$user.name</span>
+                    </div>
+                    
+                    <div class="detail-group">
+                        <label>邮箱：</label>
+                        <span>$user.email</span>
+                    </div>
+                    
+                    <div class="detail-group">
+                        <label>年龄：</label>
+                        <span>${user.age}岁</span>
+                    </div>
+                    
+                    #if($user.address)
+                        <div class="detail-group">
+                            <label>地址：</label>
+                            <span>$user.address</span>
+                        </div>
+                    #end
+                    
+                    #if($user.phone)
+                        <div class="detail-group">
+                            <label>电话：</label>
+                            <span>$user.phone</span>
+                        </div>
+                    #end
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn btn-primary">编辑用户</button>
+                    <button class="btn btn-secondary">发送消息</button>
+                    <a href="/velocity-demo/velocity/users" class="btn btn-outline">返回列表</a>
+                </div>
+            </div>
+
+            <div class="features">
+                <h3>Velocity特性演示</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>变量输出</h4>
+                        <p>使用${}输出变量</p>
+                        <p>用户名: $user.name</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>条件判断</h4>
+                        <p>使用#if进行条件控制</p>
+                        #if($user.age >= 18)
+                            <span class="status active">✓ 成年</span>
+                        #else
+                            <span class="status inactive">✗ 未成年</span>
+                        #end
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>空值检查</h4>
+                        <p>使用#if检查变量是否存在</p>
+                        #if($user.address)
+                            <span class="status active">✓ 有地址</span>
+                        #else
+                            <span class="status inactive">✗ 无地址</span>
+                        #end
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>字符串方法</h4>
+                        <p>可以调用Java字符串方法</p>
+                        <p>姓名长度: ${user.name.length()}</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>数学运算</h4>
+                        <p>支持基本的数学运算</p>
+                        <p>明年年龄: #set($nextAge = $user.age + 1)${nextAge}岁</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>变量设置</h4>
+                        <p>使用#set设置变量</p>
+                        #set($ageGroup = "青年")
+                        #if($user.age >= 30)
+                            #set($ageGroup = "中年")
+                        #end
+                        <p>年龄组: $ageGroup</p>
+                    </div>
+                </div>
+            </div>
+
+            ## 自定义宏定义
+            #macro(infoItem $label $value)
+                <div class="info-item">
+                    <strong>$label:</strong> $value
+                </div>
+            #end
+
+            ## 嵌套宏定义
+            #macro(userInfoPanel)
+                <div class="user-info-panel">
+                    <h3>用户信息摘要</h3>
+                    #infoItem("姓名" $user.name)
+                    #infoItem("邮箱" $user.email)
+                    #infoItem("年龄" "${user.age}岁")
+                    #if($user.phone)
+                        #infoItem("电话" $user.phone)
+                    #end
+                </div>
+            #end
+
+            <div class="features">
+                <h3>宏定义演示</h3>
+                <div class="feature-grid">
+                    #userInfoPanel()
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Velocity模板演示项目</p>
+        </div>
+    </footer>
+</body>
+</html> 
