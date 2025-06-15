@@ -4,7 +4,9 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
+<!-- 上面定义了 XML 文档格式和 Servlet 3.0 规范， 指定使用 Servlet 3.0 API 版本 -->
 
+    <!-- 定义了应用的名称和描述 -->
     <display-name>Servlet Demo Application</display-name>
     <description>Tomcat Servlet演示应用</description>
 

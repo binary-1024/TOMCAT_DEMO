@@ -177,6 +177,25 @@
 3. **tomcat7-maven-plugin**: 提供嵌入式Tomcat运行支持
 
 ### 2. web.xml - Web应用部署描述符
+这个 web.xml 文件是给 Servlet 容器（如 Tomcat、Jetty、WebLogic（商业）、WebSphere（商业）、GlassFish 等）读取的。
+读取时机： 
+    - 应用部署时，将 WAR 文件部署到服务器时
+    - 或者热部署，当将 web 应用目录放入webapps 目录时，tomcat 会实时监控到这个目录的变化，然后解析这个新的应用目录里的 web.xml文件 创建，加载和初始化 servlet 
+    - 服务器启动时，会扫描所有的 web 应用，读取每个应用的 WEB-INF/web.xml文件
+读取后的动作：
+1. 解析与验证： 
+  Servlet容器 → 读取web.xml → XML解析器 → 验证DTD/Schema → 创建内部配置对象
+2. 创建应用上下文：
+  - 创建 ServletContext 对象
+  - 设置应用的 display-name 和 description
+  - 初始化应用级别的参数
+3. 注册和实例化组件
+读取<servlet>配置 → 创建Servlet实例 → 调用init()方法 → 注册到容器
+4. 容器的动作：
+- 使用反射创建 com.example.servlet.HelloServlet 实例
+- 调用 servlet.init(ServletConfig) 方法
+- 将初始化参数 greeting="欢迎来到Servlet世界！" 传入
+- 因为 load-on-startup=1，所以在应用启动时立即执行上述步骤
 
 #### 基本配置
 ```xml
@@ -215,7 +234,7 @@
 ```
 - **init-param**: 初始化参数，可在Servlet中获取
 - **load-on-startup**: 容器启动时加载，数值越小优先级越高
-- **url-pattern**: URL映射规则
+- **url-pattern**: URL映射规则，容器会在路由表注册 /hello -> HelloServelt实例。 当请求 访问 http:...../应用/hello的时候，容器会找到对应的 Servlet并调用其 service（）方法
 
 **UserServlet配置**:
 ```xml
@@ -246,6 +265,10 @@
     <url-pattern>/*</url-pattern>
 </filter-mapping>
 ```
+
+- **创建过滤器实例**
+- **调用 filter.init(FilterConfig) 方法**
+- **根据 <filter-mapping> 构建过滤器链**
 - **全局过滤**: `/*` 匹配所有请求
 - **字符编码**: 统一设置为UTF-8
 
@@ -260,6 +283,22 @@
     <location>/error/500.html</location>
 </error-page>
 ```
+- **在内部错误处理表中注册**：404错误 → /error/404.html
+当发生404错误时，自动转发到指定页面
+
+#### 运行时的处理流程
+用户请求 → Tomcat接收 → 查找web.xml配置的映射 → 
+应用过滤器 → 调用对应Servlet → 返回响应
+
+#### 内存中的数据结构
+读取完成后，容器会在内存中维护：
+- Servlet 注册表：servlet-name → Servlet实例
+- URL 映射表：url-pattern → servlet-name
+- 过滤器链：按照映射顺序组织的过滤器列表
+- 错误页面映射：error-code → location
+- 初始化参数集合：各种配置参数
+
+总结：web.xml 是 Servlet 容器的"说明书"，容器通过读取它来了解如何正确部署和运行 Web 应用程序。
 
 ---
 
@@ -593,6 +632,8 @@ public class CharacterEncodingFilter implements Filter {
 - 现代化的视觉设计
 
 ### 2. style.css - 主样式表
+css 主要是为了把 html 里面的内容和风格格式拆分开，html只用于维护内容， css 负责更改样式。
+这样管理起来就清晰不复杂。 
 
 #### 样式架构
 ```css
