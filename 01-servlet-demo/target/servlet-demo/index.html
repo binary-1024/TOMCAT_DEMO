@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servlet Demo - 首页</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-section">
+            <h1>🚀 Servlet Demo 演示项目</h1>
+            <p>欢迎来到Tomcat Servlet演示项目！这个项目展示了Servlet的基本功能和用法。</p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>📝 HelloServlet</h3>
+                <p>演示Servlet的基本功能，包括GET和POST请求处理、参数获取、初始化参数使用等。</p>
+                <a href="hello" class="btn btn-primary">访问HelloServlet</a>
+            </div>
+
+            <div class="feature-card">
+                <h3>👥 用户管理</h3>
+                <p>完整的用户管理系统，支持用户的增删改查操作，演示REST风格的URL设计。</p>
+                <a href="user/list" class="btn btn-success">用户管理系统</a>
+            </div>
+
+            <div class="feature-card">
+                <h3>🔧 技术特性</h3>
+                <p>本项目演示了以下技术特性：</p>
+                <ul style="text-align: left; margin-top: 15px;">
+                    <li>✅ HttpServlet的使用</li>
+                    <li>✅ GET和POST请求处理</li>
+                    <li>✅ 请求参数获取和验证</li>
+                    <li>✅ 响应数据输出</li>
+                    <li>✅ 字符编码Filter</li>
+                    <li>✅ JSON数据处理</li>
+                    <li>✅ 错误处理</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info-box" style="margin-top: 40px;">
+            <h3>🧪 测试功能</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px;">
+                <div>
+                    <h4>HelloServlet测试</h4>
+                    <ul>
+                        <li><a href="hello">基本访问</a></li>
+                        <li><a href="hello?name=张三&age=25">带参数访问</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>用户管理测试</h4>
+                    <ul>
+                        <li><a href="user/list">用户列表</a></li>
+                        <li><a href="user/add">添加用户</a></li>
+                        <li><a href="user/api/list">API接口</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>📖 项目信息</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>技术栈</h4>
+                    <ul>
+                        <li>Java Servlet API</li>
+                        <li>Maven构建工具</li>
+                        <li>Jackson JSON处理</li>
+                        <li>HTML5 + CSS3</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>功能特点</h4>
+                    <ul>
+                        <li>响应式设计</li>
+                        <li>现代化UI界面</li>
+                        <li>完整的CRUD操作</li>
+                        <li>错误处理机制</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+            <p style="color: #7f8c8d; margin-bottom: 10px;">这是Tomcat应用项目系列的第一个子项目</p>
+            <p style="color: #34495e; font-weight: bold;">接下来将实现Filter Demo和Listener Demo</p>
+        </div>
+    </div>
+
+    <script>
+        // 简单的页面交互
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Servlet Demo 页面加载完成');
+            
+            // 为所有按钮添加点击效果
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    console.log('访问：' + this.href || this.textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
